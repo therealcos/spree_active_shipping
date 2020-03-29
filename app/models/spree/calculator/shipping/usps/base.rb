@@ -15,7 +15,16 @@ module Spree
           origin = build_location(stock_location)
           destination = build_location(order.ship_address)
 
+          puts "origin is..."
+          puts origin
+
+          puts "destination is..."
+          puts destination
+
           rates_result = retrieve_rates_from_cache(package, origin, destination)
+
+          puts "rates_result is..."
+          puts rates_result
 
           return nil if rates_result.kind_of?(Spree::ShippingError)
           return nil if rates_result.empty?
