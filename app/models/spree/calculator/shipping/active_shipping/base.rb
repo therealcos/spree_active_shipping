@@ -276,8 +276,11 @@ module Spree
             puts "shipment_packages is..."
             puts shipment_packages
             if shipment_packages.empty?
+              puts "empty!"
               {}
             else
+              puts "retrieve_rates..."
+              puts retrieve_rates(origin, destination, shipment_packages)
               retrieve_rates(origin, destination, shipment_packages)
             end
           end
