@@ -15,16 +15,7 @@ module Spree
           origin = build_location(stock_location)
           destination = build_location(order.ship_address)
 
-          puts "origin is..."
-          puts origin
-
-          puts "destination is..."
-          puts destination
-
           rates_result = retrieve_rates_from_cache(package, origin, destination)
-
-          puts "rates_result is..."
-          puts rates_result
 
           return nil if rates_result.kind_of?(Spree::ShippingError)
           return nil if rates_result.empty?
@@ -34,7 +25,7 @@ module Spree
           rate = rate.to_f + (Spree::ActiveShipping::Config[:handling_fee].to_f || 0.0)
 
           # divide by 100 since active_shipping rates are expressed as cents
-          return rate/100.0
+          return (rate/100.0) + package.contents.sum { |i| i.variant.product.shipping_fee }
         end
 
         def carrier
